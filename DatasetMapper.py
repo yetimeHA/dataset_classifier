@@ -1,6 +1,9 @@
 from rasa.nlu.components import Component
 
-from MetaMetaConnector import retrieve_tries
+from Evaluation import evaluate
+from Helpers import list_datasets
+from MetaMetaConnector import retrieve_datasetdictionary
+from RedisCache import get_datasetlist, set_datasetlist
 from TextDocumentProcessor import preprocess_text, extract_matches
 
 
@@ -33,8 +36,10 @@ class DatasetMapper(Component):
 
 
 if __name__ == '__main__':
-    tries = retrieve_tries([1], 1)[1]
-    conversation_example = "We have been talking a lot recently about all the stuff that has an influence on our sales. Especially produce and products related to meat consumption"
-    lemmas = preprocess_text(conversation_example)
-    wordscores = extract_matches(lemmas, tries)
-    print(wordscores)
+    user_id = 0
+
+    conversation_example = "We have been talking a lot recently about all the stuff that has an influence on our" \
+                           " sales. Especially produce and products related to meat consumption"
+
+    evaluate(conversation_example, user_id, True)
+

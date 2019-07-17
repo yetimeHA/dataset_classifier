@@ -23,8 +23,7 @@ class WordScore:
 class DatasetDictionary:
     """Currently composed of two tries, one for column names and one for the values"""
 
-    def __init__(self, dataset_id, colname_trie, level_trie, level_weights):
+    def __init__(self, dataset_id, colname_trie, level_trie):
         self.dataset_id = dataset_id
         self.colname_trie = colname_trie
         self.level_trie = level_trie
-        self.level_weights = level_weights

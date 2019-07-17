@@ -10,17 +10,21 @@ from spacy.lang.en import English
 import Config
 from Data import DatasetDictionary
 from Helpers import get_jwt
+from RedisCache import get_datasetdictionary
 
 nlp = English()
 lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
 tokenizer = nlp.Defaults.create_tokenizer(nlp)
 
 
-def retrieve_tries(dataset_ids: [], user_id: int) -> dict:
+def retrieve_datasetdictionary(dataset_ids: [], user_id: int) -> dict:
     """Loads lookup tries for a list of datasets"""
     lookup_tries = {}
     for id in dataset_ids:
-        lookup_tries[id] = __build_tries(id, user_id)
+        tries = get_datasetdictionary(id, user_id)
+        if tries is None:
+            tries = __build_tries(id, user_id)
+        lookup_tries[id] = tries
 
     return lookup_tries
 
