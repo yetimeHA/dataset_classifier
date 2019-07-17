@@ -1,10 +1,6 @@
 from rasa.nlu.components import Component
 
-from Evaluation import evaluate
-from Helpers import list_datasets
-from MetaMetaConnector import retrieve_datasetdictionary
-from RedisCache import get_datasetlist, set_datasetlist
-from TextDocumentProcessor import preprocess_text, extract_matches
+from Domain.Evaluation import evaluate
 
 
 class DatasetMapper(Component):

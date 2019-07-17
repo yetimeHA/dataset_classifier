@@ -1,5 +1,4 @@
 import re
-import requests
 
 from lexpy.trie import Trie
 from spacy.lang.en import LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
@@ -7,10 +6,9 @@ from spacy.lemmatizer import Lemmatizer
 from spacy.symbols import NOUN
 from spacy.lang.en import English
 
-import Config
-from Data import DatasetDictionary
-from Helpers import get_jwt
-from RedisCache import get_datasetdictionary
+from Adapters.Data import DatasetDictionary
+from Adapters.RestServices import get_column_unique_values
+from Adapters.RedisCache import get_datasetdictionary
 
 nlp = English()
 lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
@@ -31,7 +29,7 @@ def retrieve_datasetdictionary(dataset_ids: [], user_id: int) -> dict:
 
 def __build_tries(dataset_id: int, user_id: int) -> DatasetDictionary:
     """Creates lookup tries from levels and segments"""
-    col_unique_values = __get_column_unique_values(dataset_id, user_id)
+    col_unique_values = get_column_unique_values(dataset_id, user_id)
     all_values = __condense_and_lemmatize(col_unique_values)
 
     level_trie = Trie()
@@ -61,21 +59,6 @@ def __condense_and_lemmatize(col_unique_values: {}) -> list:
                     all_values.append(" ".join(lemmatized))
 
     return all_values
-
-
-def __get_column_unique_values(dataset_id, user_id, jwt="") -> dict:
-    """Queries MetaMeta Service to retrieve a dictonary of column-unique-values"""
-    if jwt == "":
-        jwt = get_jwt()
-    url = Config.METAMETA_URL + "/dataset/"+str(dataset_id)+"/column-unique-values"
-    request_params = {"userId": str(user_id)}
-    request_headers = {"x-auth-token": jwt}
-
-    col_uniques_result = requests\
-        .get(url, params=request_params, headers=request_headers)\
-        .json()
-
-    return col_uniques_result
 
 
 def is_number(s):

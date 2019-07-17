@@ -1,7 +1,7 @@
-from Helpers import list_datasets
-from MetaMetaConnector import retrieve_datasetdictionary
-from RedisCache import get_datasetlist, set_datasetlist, get_wordscores, set_wordscores
-from TextDocumentProcessor import preprocess_text, extract_matches
+from Adapters.RestServices import list_datasets
+from Domain.DictionaryBuilder import retrieve_datasetdictionary
+from Adapters.RedisCache import get_datasetlist, set_datasetlist, get_wordscores, set_wordscores
+from Domain.TextDocumentProcessor import preprocess_text, extract_matches
 
 
 def evaluate(msg: str, user_id: int, is_dialogue: bool):

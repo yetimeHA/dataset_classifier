@@ -3,7 +3,7 @@ from enum import Enum
 
 import redis
 import Config
-from Data import DatasetDictionary
+from Adapters.Data import DatasetDictionary
 
 class CacheOp(Enum):
     DATASET_LIST = "DatasetList"

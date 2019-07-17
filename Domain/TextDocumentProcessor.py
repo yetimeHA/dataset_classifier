@@ -5,7 +5,7 @@ from spacy.lang.en import English, LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES
 from spacy.lemmatizer import Lemmatizer
 
 import Config
-from Data import WordScore, DatasetDictionary
+from Adapters.Data import WordScore, DatasetDictionary
 
 nlp = English()
 lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
