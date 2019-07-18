@@ -8,7 +8,7 @@ from spacy.lang.en import English
 
 from Adapters.Data import DatasetDictionary
 from Adapters.RestServices import get_column_unique_values
-from Adapters.RedisCache import get_datasetdictionary
+from Adapters.RedisCache import get_datasetdictionary, set_datasetdictionary
 
 nlp = English()
 lemmatizer = Lemmatizer(LEMMA_INDEX, LEMMA_EXC, LEMMA_RULES)
@@ -22,6 +22,7 @@ def retrieve_datasetdictionary(dataset_ids: [], user_id: int) -> dict:
         tries = get_datasetdictionary(id, user_id)
         if tries is None:
             tries = __build_tries(id, user_id)
+            set_datasetdictionary(id, user_id, tries)
         lookup_tries[id] = tries
 
     return lookup_tries
@@ -38,10 +39,13 @@ def __build_tries(dataset_id: int, user_id: int) -> DatasetDictionary:
     colname_trie = Trie()
     colname_trie.add_all(list(col_unique_values.keys()))
 
-    return DatasetDictionary(dataset_id, colname_trie, level_trie)
+    wordcount = colname_trie.get_word_count() + level_trie.get_word_count()
+
+    return DatasetDictionary(dataset_id, colname_trie, level_trie, wordcount)
 
 
 def __condense_and_lemmatize(col_unique_values: {}) -> list:
+    """Eliminates numerical values and lemmatizes words"""
     all_values = []
 
     for segment in col_unique_values:

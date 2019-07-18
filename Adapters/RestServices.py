@@ -6,8 +6,8 @@ import Config
 
 def get_jwt() -> str:
     url = "https://christine-uat.dev.hyperanna.com/userservice/auth"
-    data = {"userKey": "demo@hyperanna.com",
-            "password": "abc123"}
+    data = {"userKey": Config.USEREMAIL,
+            "password": Config.USERPASS}
 
     request_headers = {"Content-type": "application/json"}
 

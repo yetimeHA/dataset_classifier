@@ -11,3 +11,7 @@ HOST = "christine-uat.dev.hyperanna.com"
 REDIS_HOST: str = "localhost"
 REDIS_PORT: int = 6379
 API_NLQUERY_PORT: int = 8000
+
+USER_ID = 0
+USEREMAIL ="demo@hyperanna.com"
+USERPASS = "abc123"
