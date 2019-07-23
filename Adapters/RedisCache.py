@@ -59,9 +59,11 @@ def set_wordscores(dataset_id, user_id, scores):
     key = __get_cache_key(CacheOp.WORDSCORES, dataset_id, user_id)
     redis_cache.set(key, pickle.dumps(scores))
 
+
 def delete(dataset_id, user_id):
     wordscores_key = __get_cache_key(CacheOp.WORDSCORES, dataset_id, user_id)
     redis_cache.delete(wordscores_key)
+
 
 def __get_cache_key(cache_op: CacheOp, dataset_id: int, user_id: int) -> str:
     key = cache_op.value+":::"+str(dataset_id)+":::"+str(user_id)

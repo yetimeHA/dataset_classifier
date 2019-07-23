@@ -1,5 +1,6 @@
 from typing import Any
 
+import jsons
 from rasa.nlu.components import Component
 from rasa.nlu.training_data import Message
 
@@ -18,7 +19,8 @@ class DatasetMapper(Component):
         super(DatasetMapper, self).__init__(component_config)
 
     def process(self, message: Message, **kwargs: Any):
-
+        dataset_eval = evaluate(message.text, user_id, True)
+        message.set("datasets",jsons.dumps(dataset_eval), True)
 
 
 if __name__ == '__main__':
