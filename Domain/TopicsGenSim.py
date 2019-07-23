@@ -1,3 +1,4 @@
+# Based on GenSim Tutorial, not part of the dataset classifier
 from pprint import pprint
 
 import gensim
@@ -78,7 +79,7 @@ def compute_coherence_values(dictionary, corpus, texts, limit, start=2, step=3):
 if __name__ == '__main__':
     general_dataframe = pd.DataFrame()
 
-    for file in glob.glob("/Users/yetime/DatasetIdentifier/Data/Hyper Anna Slack export Aug 9 2016 - Apr 30 2019/engineering/*.json"):
+    for file in glob.glob("/Users/yetime/DatasetIdentifier/Data/Hyper Anna Slack export Aug 9 2016 - Apr 30 2019/anna_engineering/*.json"):
 
         df = pd.read_json(file)
         general_dataframe=general_dataframe.append(df, sort=False, ignore_index=True)
@@ -143,6 +144,8 @@ if __name__ == '__main__':
         print("Topic #%s:" % idx, lsi_model.print_topic(idx, 10))
 
     print("=" * 20)
+
+    #assess best number of topics
 
     #model_list, coherence_values = compute_coherence_values(dictionary=id2word, corpus=corpus, texts=data_lemmatized, start=2, limit=40, step=6)
     #limit = 40
